@@ -1,22 +1,25 @@
-name: Run Databricks Notebook
+name: Run a notebook in databricks on PRs
 
 on:
   push:
     branches:
       - main
- 
+
 jobs:
-  run_databricks_notebook:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Run Databricks Notebook
-        env:
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-          DATABRICKS_URL: "https://dbc-0b374bc7-abe1.cloud.databricks.com/"
-          NOTEBOOK_ID: "/Users/merajalam@in.bosch.com/Notebook-V1"
-        run: |
-          curl -X POST -H "Authorization: Bearer $DATABRICKS_TOKEN" -H "Content-Type: application/json" -d '{"notebook_path": "$NOTEBOOK_ID"}' "$DATABRICKS_URL/jobs/runs/submit"
+ run-databricks-notebook:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout repo
+       uses: actions/checkout@v2
+     - name: Run a databricks notebook
+       uses: databricks/run-notebook@v0
+       with:
+         local-notebook-path: "/Users/merajalam@in.bosch.com/Notebook-V1"
+         databricks-host: "https://dbc-0b374bc7-abe1.cloud.databricks.com/"
+         databricks-token: ${{ secrets.DATABRICKS_TOKEN }}
+         new-cluster-json: >
+           {
+             "num_workers": 1,
+             "spark_version": "10.4.x-scala2.12",
+             "node_type_id": "Standard_D3_v2"
+           }
