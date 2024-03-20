@@ -3,22 +3,25 @@ name: Run Databricks Notebook
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   run_databricks_notebook:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
       - name: Run Databricks Notebook
         env:
+          DATABRICKS_HOST: "https://dbc-0b374bc7-abe1.cloud.databricks.com/"
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          NOTEBOOK_PATH: "/Users/merajalam@in.bosch.com/Notebook-V1"
         run: |
-          curl -X POST \
-            -H "Authorization: Bearer $DATABRICKS_TOKEN" \
-            -H "Content-Type: application/json" \
-            --data '{"notebook_path": "/your/notebook/path"}' \
-            https://<databricks-instance>/api/2.0/jobs/runs/submit
+          python run_databricks_notebook.py
