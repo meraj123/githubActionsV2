@@ -23,7 +23,7 @@ jobs:
 
       - name: Run Databricks Notebook
         env:
-          DATABRICKS_HOST: "https://dbc-0b374bc7-abe1.cloud.databricks.com/"
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           NOTEBOOK_PATH: "/Users/merajalam@in.bosch.com/Notebook-V1"
         run: |
