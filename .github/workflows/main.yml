@@ -3,7 +3,7 @@ name: Run Databricks Notebook
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   run_databricks_notebook:
