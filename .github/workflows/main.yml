@@ -24,4 +24,5 @@ jobs:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           NOTEBOOK_PATH: "/Users/merajalam@in.bosch.com/Notebook-V1"
         run: |
+          cd C:/Users/ERJ3KOR/Desktop
           python run_databricks_notebook.py
